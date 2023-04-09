@@ -41,10 +41,8 @@ public class Main {
                 for (var file : files) {
                     var entry = new TarArchiveEntry(file, relativePath.relativize(file).toString());
                     tarWriter.putArchiveEntry(entry);
-                    if (Files.isRegularFile(file)) {
-                        try (var is = new BufferedInputStream(Files.newInputStream(file))) {
-                            IOUtils.copy(is, tarWriter);
-                        }
+                    if (Files.isRegularFile(file)) try (var is = new BufferedInputStream(Files.newInputStream(file))) {
+                        IOUtils.copy(is, tarWriter);
                     }
                     tarWriter.closeArchiveEntry();
                 }
